@@ -1,6 +1,9 @@
 ﻿using Foundation;
 using UIKit;
 using JPush;
+using System.Text;
+using System;
+using System.Linq;
 
 namespace JPushDemo
 {
@@ -42,8 +45,8 @@ namespace JPushDemo
         {
             APService.HandleRemoteNotification(userInfo);
             Window.BackgroundColor = UIColor.Red;
-
-            MsgBoxHelper.ShowMessage("接收到推送的消息", userInfo.ToString());
+             
+            MsgBoxHelper.ShowMessage("接收到推送的消息", new string(userInfo.SelectMany(kv => string.Format("'{0}': '{1}' \n", kv.Key, kv.Value)).ToArray()));
             if (completionHandler != null)
             {
                 completionHandler(UIBackgroundFetchResult.NewData);
